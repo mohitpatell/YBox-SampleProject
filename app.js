@@ -8,7 +8,7 @@ app.use(bodyParser.json());
 
 const db=mongoose.connect( "mongodb+srv://mohit:mohit787@cluster0-nfvm2.mongodb.net/Competition'")
         .then(()=>
-        {console.log("Connection to MongoDB is Successfull (Users Auth Collection) !");
+        {console.log("Connection to MongoDB is Successfull!");
     })
         .catch(()=> {
             console.log("Connection to Database Failed !");

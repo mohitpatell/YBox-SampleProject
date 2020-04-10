@@ -5,22 +5,24 @@ const User = require('../../model/user');
 const Competition = require('../../model/competition')
 class AdderOperationController {
 
+  // Add New User
   addNewUser(values) {
     console.log(values);
     return new Promise((resolve, reject) => {
-          const user = new User({
-            name: values.name,
-            email: values.email,
-            date_added: getTime(),
-          });
-          user.save()
-            .then(result => {
-              resolve(result);
-            })
-            .catch(err => reject(err));
-        });
+      const user = new User({
+        name: values.name,
+        email: values.email,
+        date_added: getTime(),
+      });
+      user.save()
+        .then(result => {
+          resolve(result);
+        })
+        .catch(err => reject(err));
+    });
   }
 
+  // Added new Competition
   competition(values) {
     return new Promise((resolve, reject) => {
       const competition = new Competition({
@@ -39,9 +41,10 @@ class AdderOperationController {
     })
   }
 
+  // Add a Submission for a Competiton
   submission(values) {
     console.log(values);
-    return new Promise((resolve, reject)=> {
+    return new Promise((resolve, reject) => {
       const submission = new Submission({
         image: values.image,
         author: values.author,
@@ -49,31 +52,32 @@ class AdderOperationController {
       })
 
       submission.save()
-      .then(result=> {
-        return Competition.findByIdAndUpdate({_id:values.competition},{
-          $inc:{"submission":1}
+        .then(result => {
+          return Competition.findByIdAndUpdate({ _id: values.competition }, {
+            $inc: { "submission": 1 }
+          })
         })
-      })
-      .then(result=>{ return resolve(result)})
-      .catch(err=> { return reject(err)});
+        .then(result => { return resolve(result) })
+        .catch(err => { return reject(err) });
     })
   }
 
+  // Like a Submission
   submissionLike(values) {
     console.log(values);
-    return new Promise((resolve, reject)=> {
+    return new Promise((resolve, reject) => {
       const submission_like = new SubmissionLike({
         author: values.author,
         submission: values.submission
       })
       submission_like.save()
-      .then(result=> {
-        return Submission.findByIdAndUpdate({_id:values.submission},{
-          $inc:{"like":1}
+        .then(result => {
+          return Submission.findByIdAndUpdate({ _id: values.submission }, {
+            $inc: { "like": 1 }
+          })
         })
-      })
-      .then(result=>{ return resolve(result)})
-      .catch(err=> { return reject(err)});
+        .then(result => { return resolve(result) })
+        .catch(err => { return reject(err) });
     })
   }
 
